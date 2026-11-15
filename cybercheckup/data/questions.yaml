@@ -1,0 +1,416 @@
+# The question bank. Each question is one security control, written in plain language.
+#   impact      1-5  how bad it is if the control is missing
+#   likelihood  1-5  how often small businesses actually get hit through this gap
+#   effort      1-3  1 = under an hour and usually free, 2 = about a day or a small cost, 3 = a project
+#   policy           policy template that helps (file in data/policies/)
+#   profiles         optional list of sectors the question applies to (default: all)
+#   min_staff        optional minimum headcount for the question to apply (default: 1)
+#   rule             optional one-line rule for staff, used in the staff briefing
+domains:
+  accounts: { name: "Accounts and passwords", blurb: "Stolen or guessed logins are how most small businesses are broken into." }
+  email:    { name: "Email and scam messages", blurb: "Most attacks begin with a message that tricks a person." }
+  devices:  { name: "Devices and software", blurb: "Phones and computers that are updated, locked and tracked are much harder to abuse." }
+  network:  { name: "Wi-Fi and network", blurb: "Your router and Wi-Fi are the front door to everything else." }
+  backup:   { name: "Backups and recovery", blurb: "Backups turn a disaster into an inconvenience." }
+  payments: { name: "Money and payments", blurb: "Payment fraud is the fastest way a small business loses real money." }
+  data:     { name: "Customer and personal data", blurb: "Looking after other people's information is both a duty and a legal requirement." }
+  people:   { name: "Staff and access", blurb: "The right people should have the right access, and nobody else." }
+  response: { name: "When something goes wrong", blurb: "A written plan makes the first hour count." }
+
+questions:
+  - id: ACC-01
+    domain: accounts
+    title: A different password for every account
+    q: "Does each important account (email, bank, mobile money, social media) have its own password, so that no password is used twice?"
+    why: "When one website is breached, criminals try the same password on email, banking and social media."
+    fix: "Use a password manager (Bitwarden is free) and replace reused passwords, starting with email and money accounts."
+    impact: 4
+    likelihood: 5
+    effort: 2
+    policy: password
+    rule: "Use a different password for every account, saved in our password manager."
+  - id: ACC-02
+    domain: accounts
+    title: Two-step verification on email and money accounts
+    q: "Is two-step verification (a code or app prompt on top of the password) turned on for business email, banking and mobile money?"
+    why: "With two-step verification, a stolen password alone no longer opens the account."
+    fix: "Turn it on in Google or Microsoft email, WhatsApp and your banking apps. Prefer an authenticator app over SMS codes where you can."
+    impact: 5
+    likelihood: 5
+    effort: 1
+    policy: password
+    rule: "Keep two-step verification switched on. Never turn it off to make life easier."
+  - id: ACC-03
+    domain: accounts
+    title: One login per person
+    q: "Does each person have their own login, instead of sharing one account or password?"
+    why: "With a shared login you cannot tell who did what, and you cannot remove one person's access without changing it for everyone."
+    fix: "Create separate users on computers, the till and accounting software. Give people admin roles on social media pages instead of sharing the password."
+    impact: 3
+    likelihood: 4
+    effort: 1
+    policy: password
+    rule: "Never share your login, and never ask someone else to share theirs."
+  - id: ACC-04
+    domain: accounts
+    title: A way back in if the owner's phone is lost
+    q: "If the owner lost their phone today, could the business still get into its email, social media pages and bank or mobile money accounts?"
+    why: "Business accounts are often tied to one person's phone or personal email, and losing that phone can lock the business out for days."
+    fix: "Add a second trusted admin to business pages, use a recovery email the business controls, and keep a written list of key accounts in a safe place."
+    impact: 3
+    likelihood: 3
+    effort: 1
+    policy: password
+
+  - id: EML-01
+    domain: email
+    title: Staff can spot fake messages
+    q: "Do staff know how to spot fake messages, such as urgent payment requests, prize offers, or 'your account will be blocked' links?"
+    why: "Most attacks on small businesses start with a message that tricks someone into clicking, paying or giving away a code."
+    fix: "Run the 30-minute staff briefing that comes with this report and repeat it every six months."
+    impact: 4
+    likelihood: 5
+    effort: 1
+    policy: acceptable-use
+    rule: "Stop and check before you click, pay or reply to anything urgent, too good to be true, or asking for money or a code."
+  - id: EML-02
+    domain: email
+    title: A proper business email address
+    q: "Does the business use its own managed email (for example name@yourbusiness, on Google Workspace or Microsoft 365) instead of staff using personal free email accounts for work?"
+    why: "Personal inboxes have no central control. If someone leaves or is hacked, you cannot lock the account or recover customer messages."
+    fix: "Set up a business email domain and move business mail onto it."
+    impact: 2
+    likelihood: 3
+    effort: 2
+    policy: acceptable-use
+  - id: EML-03
+    domain: email
+    title: Never share PINs or one-time codes
+    q: "Is there a firm rule that nobody shares PINs or one-time codes (OTP) by phone, SMS or chat, even with someone claiming to be the bank, the telecom company or the boss?"
+    why: "Scammers pretend to be the bank or telecom and ask for the code that was just sent to the victim. With that code they take over the account."
+    fix: "Make it the rule: banks and telecoms never ask for your PIN or OTP. Hang up and call back on the official number."
+    impact: 5
+    likelihood: 4
+    effort: 1
+    policy: acceptable-use
+    rule: "Never read out a PIN or one-time code to anyone. Hang up and call back on the official number."
+
+  - id: DEV-01
+    domain: devices
+    title: Automatic updates
+    q: "Are computers and phones set to install updates automatically?"
+    why: "Most successful attacks use weaknesses that an update had already fixed."
+    fix: "Turn on automatic updates in Windows, macOS, Android and iPhone settings, and restart computers weekly."
+    impact: 4
+    likelihood: 4
+    effort: 1
+    policy: devices
+    rule: "Do not postpone updates. Restart when asked."
+  - id: DEV-02
+    domain: devices
+    title: Antivirus switched on
+    q: "Does every computer have antivirus switched on and up to date (Windows Security is fine)?"
+    why: "Antivirus stops a large share of common malware, but only while it is on and current."
+    fix: "Check that Windows Security or another antivirus is on, and remove any expired trial software."
+    impact: 3
+    likelihood: 4
+    effort: 1
+    policy: devices
+  - id: DEV-03
+    domain: devices
+    title: Screen locks on every device
+    q: "Do phones and computers lock automatically and need a PIN, password or fingerprint to open?"
+    why: "A phone or laptop left on the counter gives access to everything on it, including mobile money, WhatsApp and email."
+    fix: "Set auto-lock to one or two minutes, with a PIN of six digits or more, or a password."
+    impact: 3
+    likelihood: 4
+    effort: 1
+    policy: devices
+    rule: "Lock your phone and computer every time you step away."
+  - id: DEV-04
+    domain: devices
+    title: No pirated or cracked software
+    q: "Is all the software you use licensed or free and open source, with no cracked or pirated programs?"
+    why: "Cracked software often hides malware, and it cannot be updated safely."
+    fix: "Replace pirated programs with licensed or free alternatives, such as LibreOffice instead of a cracked office suite."
+    impact: 4
+    likelihood: 3
+    effort: 2
+    policy: devices
+  - id: DEV-05
+    domain: devices
+    title: A list of business devices
+    q: "Do you keep a list of the business's computers, phones and other devices, and who uses each?"
+    why: "You cannot protect or recover what you do not know you have."
+    fix: "Write a simple table: device, who uses it, where it is kept, when it was bought."
+    impact: 2
+    likelihood: 3
+    effort: 1
+    policy: devices
+  - id: DEV-06
+    domain: devices
+    title: Lost devices can be locked or wiped
+    q: "If a phone or laptop that holds business information is lost or stolen, can you lock or wipe it remotely?"
+    why: "Lost and stolen devices are one of the most common ways business and customer data leaks."
+    fix: "Turn on Find My Device (Android), Find My (Apple) or Windows Find My Device, and keep the account details somewhere safe."
+    impact: 3
+    likelihood: 3
+    effort: 2
+    policy: devices
+
+  - id: NET-01
+    domain: network
+    title: Strong Wi-Fi security
+    q: "Is the business Wi-Fi protected with a strong password and WPA2 or WPA3 security, rather than left open?"
+    why: "An open or easily guessed Wi-Fi lets neighbours and passers-by watch traffic and reach your devices."
+    fix: "In the router settings choose WPA2 or WPA3 and a password of 12 or more characters. Change it when staff leave."
+    impact: 4
+    likelihood: 4
+    effort: 1
+    policy: devices
+  - id: NET-02
+    domain: network
+    title: Router admin password changed
+    q: "Was the router's default admin password (often printed on a sticker) changed?"
+    why: "Default router passwords are published online. Anyone on your network could take over the router."
+    fix: "Log in to the router's settings page, set a new admin password, and switch off remote administration."
+    impact: 4
+    likelihood: 4
+    effort: 1
+    policy: devices
+  - id: NET-03
+    domain: network
+    title: A separate guest Wi-Fi
+    q: "Do customers and visitors use a separate guest Wi-Fi from the one staff and the till use?"
+    why: "A visitor's infected phone should not be able to reach your accounts computer or point-of-sale."
+    fix: "Turn on the guest network in the router and give visitors only that password."
+    impact: 3
+    likelihood: 3
+    effort: 2
+    policy: devices
+  - id: NET-04
+    domain: network
+    title: Cameras and printers secured
+    q: "Have the default passwords on CCTV cameras, printers and other smart devices been changed, with remote access switched off if you do not use it?"
+    why: "Cameras and recorders with factory passwords are routinely taken over, used in attacks, or used to spy."
+    fix: "Change their default passwords, install firmware updates, and turn off remote access you do not need."
+    impact: 3
+    likelihood: 3
+    effort: 2
+    policy: devices
+
+  - id: BAK-01
+    domain: backup
+    title: Regular backups
+    q: "Are your important files (customer records, accounts, stock lists, photos) backed up regularly?"
+    why: "Ransomware, a failed disk, theft or fire can destroy a business's records overnight. A backup is the way back."
+    fix: "Set up automatic backups to a cloud service or external drive, at least weekly and daily for busy records."
+    impact: 5
+    likelihood: 4
+    effort: 2
+    policy: backup
+    rule: "Save work in the shared, backed-up folder, never only on your desktop or phone."
+  - id: BAK-02
+    domain: backup
+    title: A backup kept somewhere separate
+    q: "Is at least one backup kept where ransomware, theft or fire could not reach it, such as a cloud service or a drive that is disconnected and kept off site?"
+    why: "Ransomware also locks any drive that is plugged in, and a backup sitting next to the computer burns or is stolen with it."
+    fix: "Keep one copy in the cloud, or on a drive that is unplugged and stored somewhere else."
+    impact: 5
+    likelihood: 3
+    effort: 2
+    policy: backup
+  - id: BAK-03
+    domain: backup
+    title: Backups have been tested
+    q: "In the past six months, have you tested getting a file back from a backup?"
+    why: "Many businesses discover their backup was empty or broken only when they need it."
+    fix: "Every six months, restore two files from the backup and note the date."
+    impact: 4
+    likelihood: 3
+    effort: 2
+    policy: backup
+
+  - id: PAY-01
+    domain: payments
+    title: Call back before paying new details
+    q: "When a supplier, landlord or manager sends new payment details (bank account, paybill or till number) by message or email, does someone confirm by calling a number you already have?"
+    why: "Fraudsters copy real invoices and change the account number. The money is gone before anyone notices."
+    fix: "Adopt a call-back rule: any change to payment details must be confirmed by phone, on a known number, before paying."
+    impact: 5
+    likelihood: 4
+    effort: 1
+    policy: payments
+    rule: "Never pay to new details without calling the person on a number we already have."
+  - id: PAY-02
+    domain: payments
+    title: Two people approve large payments
+    min_staff: 2
+    q: "Does a second person approve large payments and any change to payment details?"
+    why: "One person who both makes and approves payments is the easiest to trick, and the easiest to tempt."
+    fix: "Set an amount above which two people must agree, and write it into the payments policy."
+    impact: 4
+    likelihood: 3
+    effort: 2
+    policy: payments
+  - id: PAY-03
+    domain: payments
+    title: Mobile money phones and SIMs protected
+    q: "Are the phones and SIM cards used for business mobile money or banking protected with a SIM PIN, a screen lock, and a wallet PIN known only to the account holder?"
+    why: "SIM swaps and phone theft let criminals empty mobile wallets within minutes."
+    fix: "Set a SIM PIN, never write the wallet PIN on or near the phone, and ask your telecom what extra protection it offers against SIM swaps."
+    impact: 5
+    likelihood: 3
+    effort: 1
+    policy: payments
+    rule: "Keep your mobile money PIN in your head. Never write it on the phone or share it."
+  - id: PAY-04
+    domain: payments
+    title: Statements checked every week
+    q: "Does someone look through bank and mobile money statements at least weekly for transactions they do not recognise?"
+    why: "Fraud caught within days can often be reversed. Fraud found months later usually cannot."
+    fix: "Book 15 minutes every Friday for this, and switch on transaction alerts by SMS or app."
+    impact: 4
+    likelihood: 3
+    effort: 1
+    policy: payments
+  - id: PAY-05
+    domain: payments
+    title: Card machines checked for tampering
+    profiles: [shop]
+    q: "Are card machines and POS terminals checked each day for tampering and kept out of customers' reach when not in use?"
+    why: "Tampered terminals can copy card details or redirect payments."
+    fix: "Look for loose parts, new cables or stickers each morning, and lock terminals away overnight."
+    impact: 4
+    likelihood: 2
+    effort: 1
+    policy: devices
+
+  - id: DAT-01
+    domain: data
+    title: Know what personal data you hold
+    q: "Do you know what personal information the business holds about customers, patients, students, donors or staff, and where it is kept?"
+    why: "You cannot protect data you have forgotten about. Old notebooks, phones, spreadsheets and chat groups all count."
+    fix: "List every place personal data lives (phone contacts, paper files, spreadsheets, apps) and who can reach it."
+    impact: 3
+    likelihood: 4
+    effort: 2
+    policy: data-protection
+  - id: DAT-02
+    domain: data
+    title: Personal data kept out of sight
+    q: "Is personal information kept out of public view and out of open chat groups (no open notebooks, no customer details posted in big group chats, screens not facing customers)?"
+    why: "Careless handling is the most common cause of small-business data leaks."
+    fix: "Keep paper records in a locked drawer, turn screens away from customers, and stop sharing customer details in group chats."
+    impact: 4
+    likelihood: 4
+    effort: 1
+    policy: data-protection
+    rule: "Keep customer details in our system. Do not post them in group chats or photograph them on personal phones."
+  - id: DAT-03
+    domain: data
+    title: Sensitive records restricted
+    profiles: [clinic, school, ngo]
+    q: "Are the most sensitive records (health information, children's details, ID numbers, beneficiary lists) limited to the few people who need them?"
+    why: "Leaks of health, children's or beneficiary data hurt real people and can bring legal trouble."
+    fix: "Give access by role, keep these records in one controlled place, and record who opens them."
+    impact: 5
+    likelihood: 3
+    effort: 2
+    policy: data-protection
+  - id: DAT-04
+    domain: data
+    title: Privacy notice and regulator registration
+    q: "Have you checked whether the business must register with the data protection regulator (the ODPC in Kenya), and do customers get a short notice that explains how their details are used?"
+    why: "Data protection law applies to small businesses too, and a clear notice builds customers' trust."
+    fix: "Read the regulator's guidance, register if required, and put a one-paragraph privacy notice at the till or on your forms."
+    impact: 3
+    likelihood: 2
+    effort: 2
+    policy: data-protection
+
+  - id: PPL-01
+    domain: people
+    title: Access matches the job
+    min_staff: 2
+    q: "Does each staff member have only the access they need for their job?"
+    why: "The fewer people who can reach money and records, the smaller the damage from a mistake, a scam or a dishonest act."
+    fix: "List what each role needs, remove everything else, and review every six months."
+    impact: 4
+    likelihood: 3
+    effort: 2
+    policy: acceptable-use
+  - id: PPL-02
+    domain: people
+    title: Same-day removal when someone leaves
+    min_staff: 2
+    q: "When someone leaves, are their accounts, keys, shared passwords and phone access removed the same day?"
+    why: "Former staff with working logins are a common source of data theft and sabotage."
+    fix: "Make a leaver checklist: accounts, Wi-Fi password, till, social media admin roles, keys and any business phone."
+    impact: 4
+    likelihood: 3
+    effort: 1
+    policy: acceptable-use
+  - id: PPL-03
+    domain: people
+    title: Security briefing for new staff
+    min_staff: 2
+    q: "Do new staff get a short security briefing and agree to the business's security rules before they handle data or money?"
+    why: "People can only follow rules they have been told."
+    fix: "Use the staff briefing and the acceptable-use template, and keep a signed copy."
+    impact: 3
+    likelihood: 4
+    effort: 1
+    policy: acceptable-use
+  - id: PPL-04
+    domain: people
+    title: Outside helpers have limited access
+    q: "Do outside helpers (web designer, accountant, IT helper, freelancers) get only the access they need, and is it removed when the job ends?"
+    why: "Contractors' accounts are often forgotten and may be less well protected than your own."
+    fix: "Give each helper their own login, limited to the job, and remove it at the end."
+    impact: 3
+    likelihood: 3
+    effort: 2
+    policy: acceptable-use
+
+  - id: RSP-01
+    domain: response
+    title: A written who-to-call list
+    q: "Is there a written list of who to call and what to do first if the business is hacked or scammed (bank, telecom, IT helper, regulator)?"
+    why: "In the first hour, quick action can stop the loss. Without a plan, people freeze or make things worse."
+    fix: "Fill in the incident response template from this report and pin it where staff can see it."
+    impact: 4
+    likelihood: 4
+    effort: 1
+    policy: incident-response
+  - id: RSP-02
+    domain: response
+    title: Staff report problems fast
+    q: "Do staff know to report a suspicious message, a mistake or a lost device straight away, and do they know they will not be punished for reporting?"
+    why: "Fear of blame makes people hide mistakes, which gives attackers more time."
+    fix: "Say it clearly in the staff briefing: reporting fast is rewarded, hiding a problem is the real mistake."
+    impact: 4
+    likelihood: 4
+    effort: 1
+    policy: incident-response
+    rule: "If you clicked, paid or lost something, tell the manager straight away. Reporting fast is never punished."
+  - id: RSP-03
+    domain: response
+    title: Numbers saved to block a SIM, wallet or card
+    q: "Do you have the phone numbers saved to block a stolen SIM, freeze a mobile money wallet, or stop a bank card quickly?"
+    why: "Minutes matter once a phone or card is stolen."
+    fix: "Save the telecom, mobile money and bank hotline numbers on a printed list and in more than one phone."
+    impact: 4
+    likelihood: 3
+    effort: 1
+    policy: incident-response
+  - id: RSP-04
+    domain: response
+    title: Can keep trading without computers
+    q: "Could the business keep trading for a few days if the computers, phones or internet stopped working?"
+    why: "Ransomware or a long outage can stop sales. Businesses with a simple fallback recover faster."
+    fix: "Write down the minimum needed to keep trading (paper receipts, price list, key phone numbers, cash float) and keep a printed copy."
+    impact: 3
+    likelihood: 2
+    effort: 2
+    policy: incident-response

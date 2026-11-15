@@ -1,0 +1,53 @@
+# Sector profiles. "weights" multiply the risk of every control in a domain,
+# so the same gap ranks higher where the stakes are higher (e.g. patient data
+# at a clinic). "scenarios" feed the staff briefing.
+sectors:
+  shop:
+    label: Shop or retail business
+    weights: { payments: 1.4, backup: 1.1, devices: 1.1 }
+    scenarios:
+      - "A customer shows a message that looks like a mobile money confirmation, says they sent money by mistake, and asks you to send it back. No money ever arrived."
+      - "A caller says they are from the telecom company and need the code just sent to your phone to 'fix your till line'."
+      - "A supplier's 'new paybill number' arrives on WhatsApp the day before a big payment is due."
+  salon:
+    label: Salon, barber or beauty business
+    weights: { payments: 1.3, accounts: 1.3, email: 1.1 }
+    scenarios:
+      - "Your business Instagram or Facebook page, which brings in most bookings, is hijacked and starts selling fake offers to your customers."
+      - "A 'brand partnership' message asks you to click a link to log in and claim a free product. The page steals your login."
+      - "A customer's deposit arrives by message screenshot. The money never reached your wallet."
+  clinic:
+    label: Clinic, pharmacy or health practice
+    weights: { data: 1.5, backup: 1.3, people: 1.2 }
+    scenarios:
+      - "Ransomware locks the computer that holds patient records and appointments. The criminals demand payment."
+      - "A staff member photographs a patient's file to send to a colleague on WhatsApp. The phone is later stolen."
+      - "An email that appears to come from the laboratory asks you to log in to see 'urgent results'. The login page is fake."
+  school:
+    label: School or training college
+    weights: { data: 1.4, people: 1.3, email: 1.2 }
+    scenarios:
+      - "A fake email from the 'head teacher' asks the bursar to urgently pay a new supplier."
+      - "A shared teachers' password is passed around and a former employee still uses it to read pupils' records."
+      - "Fee payments are redirected after a parent receives a message with 'updated school account details'."
+  ngo:
+    label: NGO or community organisation
+    weights: { email: 1.3, data: 1.3, payments: 1.2, accounts: 1.2 }
+    scenarios:
+      - "Someone pretending to be a donor emails asking you to confirm the organisation's bank details for a grant."
+      - "A volunteer's laptop with a list of beneficiaries is lost on a trip."
+      - "A fake 'funder portal' login page collects the finance officer's password."
+  startup:
+    label: Startup or small tech or services company
+    weights: { accounts: 1.3, backup: 1.2, data: 1.2, devices: 1.1 }
+    scenarios:
+      - "A developer accidentally publishes a password or cloud key in a public code repository, and bots find it within minutes."
+      - "A fake investor emails a 'term sheet' attachment that installs malware on the founder's laptop."
+      - "A departing contractor still has access to the cloud account a month after leaving."
+  other:
+    label: Other small business
+    weights: {}
+    scenarios:
+      - "A message that looks like it comes from your bank asks you to 'verify your account' through a link."
+      - "A caller pretending to be a boss or supplier asks you to make an urgent payment and keep it quiet."
+      - "A stolen phone with an unlocked screen gives a thief access to email, WhatsApp and mobile money."
