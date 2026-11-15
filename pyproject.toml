@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cybercheckup"
+version = "0.1.0"
+description = "Cyber-health assessment for small businesses: risk score, prioritised action plan, policy templates and a staff briefing."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["PyYAML>=6.0", "Markdown>=3.5"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+cybercheckup = "cybercheckup.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cybercheckup*"]
+
+[tool.setuptools.package-data]
+cybercheckup = ["data/*.yaml", "data/*.json", "data/policies/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
